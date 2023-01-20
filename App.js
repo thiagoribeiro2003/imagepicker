@@ -20,6 +20,7 @@ export default function ImagePickerExample() {
       setImage(result.assets[0].uri);
     }
   };
+  o;
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
