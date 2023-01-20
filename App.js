@@ -3,29 +3,28 @@ import { Button, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 export default function ImagePickerExample() {
-  const [image, setImage] = useState(null);
+  const [foto, setFoto] = useState(); // Recupera a foto que vc vai bater com a câmera
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+  const acessarCamera = async () => {
+    const imagem = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [9, 16],
+      aspect: [16, 9],
       quality: 0.5,
     });
 
-    console.log(result);
+    console.log(imagem);
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
+    // pegando a url da foto q ta dentro do objeto imagem, e passando para o state
+    setFoto(imagem.assets[0].uri);
   };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />
+      <Button title="Acessar câmera" onPress={acessarCamera} />
+
+      {/* Se ouver foto renderiza a imagem */}
+      {foto && (
+        <Image source={{ uri: foto }} style={{ width: 300, height: 200 }} />
       )}
     </View>
   );
